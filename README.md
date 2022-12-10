@@ -1,6 +1,9 @@
 # MasterMind-WIth-Pygame-In-Python
 Created a game of mastermind in python. A gui was made with pygame.
 
+Required packages:
+1.Pygame
+
 Going to add:
 1. Leaderboard
 2. Save game
