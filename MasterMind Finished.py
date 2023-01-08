@@ -787,7 +787,7 @@ if True:
 
         showColoursForPage(len(listOfColours), listOfColours, screenWidth, screenHeight)
         
-
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -798,7 +798,6 @@ if True:
                 wantAns = b.click(event, listOfColours)
                 if wantAns == "Submit":
                     answers = getAnswers(buttons)
-                    print(f"Answers User Gave = {answers}")
                     answersToWrite = []
                     counterVariable = 0
                     for ans in answers:
@@ -818,15 +817,12 @@ if True:
                     # Initiate creation of new row
 
                     countOfEachCorrectColour = countNumberOfEachColour(listOfColours, board)
-                    print(f"The number of each correct colour peg thingy = {countOfEachCorrectColour}")
                     corrections =  checkUsersGuess(answers, correctAnswer, countOfEachCorrectColour, listOfColours)
-                    print(f"Corrections = {corrections}")
                     right, kindaRight, wrong = corrections["Number Correct"], corrections["Number Correct Colour"], corrections["Number Wrong"]
                     pegColours = getPegColours(right, kindaRight, wrong)
                     allPegs.append(pegColours)
                     if pegColours["white"] ==  pegColours["white"] +  pegColours["grey"] +  pegColours["black"]:
                         gameOn = False
-                    allPegs.append(pegColours)
                     getPegsPositioned(pegColours, oldx, oldy)
                     numberOfRowsLeft -=1
 
@@ -836,7 +832,6 @@ if True:
                         clearScreen(screenWidth, 50)
 
                 elif wantAns == "SaveGame":
-                    print("Save wanted")
                     saveGame(numberOfColumns, numberOfRows, listOfColours, correctAnswer, numberOfRowsLeft, allUsersAnswers, allPegs)
 
                 elif wantAns == "MainMenu":
@@ -847,8 +842,6 @@ if True:
                 buttons, oldx, oldy = makeButtons(oldx, oldy, numberOfColumns, listOfColours)
                 mainMenuButton = Button("Main Menu", (screenWidth-320, 50), font=30, bg="Red", mainMenu = True)
                 saveGameButton = Button("Save Game", (screenWidth-170, 50), font=30, bg="Red", saveGameButton = True)
-                buttons.append(mainMenuButton)
-                buttons.append(saveGameButton)
 
                 mainMenuButton.show()
                 saveGameButton.show()
@@ -1173,17 +1166,8 @@ if True:
 
     def saveGame(numberOfColumns, numberOfRows, colours, answer, numberOfTurnsLeft, listOfUsersAnswers, listOfColouredPegs):
         # saving format
-        """
-        numberOfColumns
-        numberOfRows
-        listOfColours
-        NumberOfTurnsLeft
-        answer
-        previous guesses... with pegs
-        (e.g. ["red", "green", "blue"]_[white, white, blue]
-        ["blue", "orange", "green"]_[white, white, blue]) 
-
-        """
+        print(listOfUsersAnswers)
+        print(listOfColouredPegs)
         stringToWrite = ""
         stringToWrite += f"{numberOfColumns}\n"
         stringToWrite += f"{numberOfRows}\n"
@@ -1204,7 +1188,6 @@ if True:
         date = datetime.now().strftime("%y%m%d%H%M%S")
 
         filesPath = f"{basePath}/SavedGames/{date}.txt"
-
         file = open(filesPath, "w")
         file.write(stringToWrite)
         file.close()
@@ -1457,7 +1440,6 @@ if True:
                 for b in buttons:
                     buttonPressed = b.click(event, listOfColours)
                     if buttonPressed == "MainMenu":
-                        print("Main")
                         mainMenu(numberOfColumns, numberOfRows, listOfColours, screenWidth, screenHeight)
 
                     elif buttonPressed == "Local":
@@ -1479,7 +1461,7 @@ if True:
                                         mainMenu(numberOfColumns, numberOfRows, listOfColours, screenWidth, screenHeight)
 
                     elif buttonPressed == "Online":
-                        print("Not working :(")
+                        pass
 
     def getUsersChoiceOfColours(numberOfColumns, listOfColours, numberOfRows,screenWidth,screenHeight):
         mainMenuButton = Button("Main Menu", (880, 50), font=30, bg="Red", mainMenu=True)
@@ -1515,7 +1497,12 @@ if True:
                         answersForBoard = getAnswers(buttons)
                         coloursNotFound = False
         return answersForBoard
-  
+   
+
+
+
+
+    #, "Blue", "Red", "Purple", "Orange", "Green", "Crimson", "Coral", "Cyan", "darkblue", "darkgreen", "darksalmon", "deeppink4", "pink"
     colourListLength = 4
     colours = changeListOfColours(colourListLength)
     numberOfColumns, numberOfRows = 4, 10
