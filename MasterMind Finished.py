@@ -117,7 +117,7 @@ if True:
     class Button:
         """Create a button, then blit the surface in the while loop"""
     
-        def __init__(self, text,  pos, listOfColours=[], font=0, bg="black", feedback="",submitButton = False, displayLeaderBoardButton = False, newGameButton = False, saveGameButton = False, loadGameButton = False, mainMenu = False, numberButton = False, settingsPageButton = False, plusButton = False, minusButton = False, rangeOfNumbers = 25, currentNumber = 0, listOfButtons = [], loadingGame = False, helpPageButton=False):
+        def __init__(self, text,  pos, listOfColours=[], font=0, bg="black", feedback="",submitButton = False, displayLeaderBoardButton = False, newGameButton = False, saveGameButton = False, loadGameButton = False, mainMenu = False, numberButton = False, settingsPageButton = False, plusButton = False, minusButton = False, rangeOfNumbers = 25, currentNumber = 0, listOfButtons = [], loadingGame = False, helpPageButton=False, rulesPageButton = False, multiPlayerButton=False, singlePlayerButton=False, localButton=False, onlineButton=False):
 
             self.x, self.y = pos
             self.font = pygame.font.SysFont("Arial", font)
@@ -136,6 +136,13 @@ if True:
             self.minusButton = minusButton
             self.loadingGame = loadingGame
             self.helpPage = helpPageButton
+            self.rulesPage = rulesPageButton
+            self.multiplayer = multiPlayerButton
+            self.singleplayer = singlePlayerButton
+            self.localGame = localButton
+            self.online = onlineButton
+
+
 
             if submitButton:
                 text = "Submit ;P"
@@ -192,7 +199,37 @@ if True:
                 self.surface = pygame.Surface(self.size)
                 self.surface.blit(self.text, (self.x, self.y))
             elif helpPageButton:
-                text = "Help Page :D"
+                text = "Help Page"
+                self.text = self.font.render(text, 1, pygame.Color("White"))
+                self.size = self.text.get_size()
+                self.surface = pygame.Surface(self.size)
+                self.surface.blit(self.text, (self.x, self.y))
+            elif rulesPageButton:
+                text = "Rules Page"
+                self.text = self.font.render(text, 1, pygame.Color("White"))
+                self.size = self.text.get_size()
+                self.surface = pygame.Surface(self.size)
+                self.surface.blit(self.text, (self.x, self.y))
+            elif singlePlayerButton:
+                text = "Single Player"
+                self.text = self.font.render(text, 1, pygame.Color("White"))
+                self.size = self.text.get_size()
+                self.surface = pygame.Surface(self.size)
+                self.surface.blit(self.text, (self.x, self.y))
+            elif multiPlayerButton:
+                text = "Multi Player"
+                self.text = self.font.render(text, 1, pygame.Color("White"))
+                self.size = self.text.get_size()
+                self.surface = pygame.Surface(self.size)
+                self.surface.blit(self.text, (self.x, self.y))
+            elif localButton:
+                text = "Local"
+                self.text = self.font.render(text, 1, pygame.Color("White"))
+                self.size = self.text.get_size()
+                self.surface = pygame.Surface(self.size)
+                self.surface.blit(self.text, (self.x, self.y))
+            elif onlineButton:
+                text = "Online"
                 self.text = self.font.render(text, 1, pygame.Color("White"))
                 self.size = self.text.get_size()
                 self.surface = pygame.Surface(self.size)
@@ -204,7 +241,7 @@ if True:
                 self.feedback = feedback       
             change = 1
             # hard bit
-            if  submitButton or displayLeaderBoardButton or newGameButton or saveGameButton or loadGameButton or mainMenu or settingsPageButton or plusButton or minusButton or helpPageButton:
+            if  submitButton or displayLeaderBoardButton or newGameButton or saveGameButton or loadGameButton or mainMenu or settingsPageButton or plusButton or minusButton or helpPageButton or rulesPageButton or singlePlayerButton or multiPlayerButton or localButton or onlineButton:
                 change = 0
             if self.numberButton:
                 bg = self.get_next_number(change, rangeOfNumbers)
@@ -265,7 +302,7 @@ if True:
 
         def change_colour(self, listOfColours, direction):
             """Change the text when you click"""
-            if self.submit or self.showLeaderboard or self.newGame or self.loadGame or self.mainMenu or self.settingsButton or self.plusButton or self.minusButton or self.saveGame or self.helpPage:
+            if self.submit or self.showLeaderboard or self.newGame or self.loadGame or self.mainMenu or self.settingsButton or self.plusButton or self.minusButton or self.saveGame or self.helpPage or self.rulesPage or self.singleplayer or self.multiplayer or self.localGame or self.online:
                 x,y = self.size
             else:
                 x,y = 50,50
@@ -280,7 +317,7 @@ if True:
             self.surface.fill(bg)
             self.rect = pygame.Rect(self.x, self.y, self.size[0], self.size[1])
             self.show()
-            #pygame.display.update()     
+            #pygame.display.update()   
     
         def show(self):
             screen.blit(self.surface, (self.x, self.y))
@@ -306,6 +343,17 @@ if True:
                 self.surface.blit(self.text, (0,0))
             elif self.helpPage:
                 self.surface.blit(self.text, (0,0))
+            elif self.rulesPage:
+                self.surface.blit(self.text, (0,0))
+            elif self.singleplayer:
+                self.surface.blit(self.text, (0,0))
+            elif self.multiplayer:
+                self.surface.blit(self.text, (0,0))
+            elif self.localGame:
+                self.surface.blit(self.text, (0,0))
+            elif self.online:
+                self.surface.blit(self.text, (0,0))
+
             pygame.display.update()
     
         def getSize(self):
@@ -333,7 +381,7 @@ if True:
                         if event.button in [1,3,4,5]:
                             # If the button isn't submit ;)
                             wants = "Nothing"
-                            if  not (self.submit or self.showLeaderboard or self.newGame or self.loadGame or self.saveGame or self.mainMenu or self.settingsButton or self.plusButton or self.minusButton or self.helpPage):
+                            if  not (self.submit or self.showLeaderboard or self.newGame or self.loadGame or self.saveGame or self.mainMenu or self.settingsButton or self.plusButton or self.minusButton or self.helpPage or self.rulesPage or self.singleplayer or self.multiplayer or self.localGame or self.online):
                                 if self.numberButton:
                                     self.change_number(direction, self.rangeOfNumbers)
                                     self.show()
@@ -374,6 +422,21 @@ if True:
 
                                 elif self.helpPage:
                                     wants = "Help"
+
+                                elif self.rulesPage:
+                                    wants = "Rules"
+
+                                elif self.multiplayer:
+                                    wants = "MultiPlayer"
+                                
+                                elif self.singleplayer:
+                                    wants = "SinglePlayer"
+
+                                elif self.localGame:
+                                    wants = "Local"
+                                
+                                elif self.online:
+                                    wants = "Online"
 
                                 else:
                                     wants = "Glitch"
@@ -422,42 +485,26 @@ if True:
         clearScreen(width, height)
 
         font = pygame.font.SysFont(None,60)
-        img = font.render("Leaderboards!", True, "YELLOW")
+        img = font.render("Leaderboards!", True, "White")
         screen.blit(img,(giveXCoord("Leaderboards!", width)-50,50))
 
-    #   font = pygame.font.SysFont(None,20)
-    #   img = font.render("Number Of Rows:", True, "YELLOW")
-    #   screen.blit(img,(width-200,100))
-
-    #   font = pygame.font.SysFont(None,20)
-    #   img = font.render("Number Of Columns:", True, "YELLOW")
-    #   screen.blit(img,(width-220,150))
-
         font = pygame.font.SysFont(None,70)
-        img = font.render("Score", True, "YELLOW")
+        img = font.render("Score", True, "White")
         screen.blit(img,(100,80))
             
         font = pygame.font.SysFont(None,70)
-        img = font.render("Date", True, "YELLOW")
+        img = font.render("Date", True, "White")
         screen.blit(img,(300,80))
 
         font = pygame.font.SysFont(None,40)
         for i in range(15):
-            img = font.render(f"{i+1}. ", True, "YELLOW")
+            img = font.render(f"{i+1}. ", True, "White")
             screen.blit(img,(75, 150 + i*55))
 
-    #   numOfColumnsButton = Button("Number Button", (width - 80, 90), colours, 30, currentNumber=str(currentNumber), numberButton=True)
-    #  numOfColoursButton = Button("Number Button", (width - 80, 140), colours, 30, currentNumber=str(currentNumber), numberButton=True)
 
         mainMenuButton = Button("Main Menu", (width-127, 5), colours, font=30, bg="Red", mainMenu=True)
 
 
-
-
-
-    #   numOfColumnsButton.show()
-    #   numOfColoursButton.show()
-    #   buttons = [numOfColumnsButton, numOfColoursButton]
         buttons = [mainMenuButton]
         for button in buttons:
             button.show()
@@ -511,7 +558,7 @@ if True:
             if "\n" in text:
                 text = text.replace("\n","")
             font = pygame.font.SysFont(None,40)
-            img = font.render(text, True, "YELLOW")
+            img = font.render(text, True, "White")
             screen.blit(img,(x,y))
 
 
@@ -656,18 +703,18 @@ if True:
         if gameStatus:
             # Write a message on the blank screen ;)
             font = pygame.font.SysFont(None,60)
-            img = font.render("You won!", True, "YELLOW")
+            img = font.render("You won!", True, "White")
             screen.blit(img,(180,300))
             score = int((len(listOfColours) * numberOfColumns) ** ((1/(numberOfTurns+1))))*1000
             font = pygame.font.SysFont(None,60)
-            img = font.render(f"Score:      {score}", True, "YELLOW")
+            img = font.render(f"Score:      {score}", True, "White")
             screen.blit(img,(180,450))       
             
         # Otherwise the game was lost 
         else:
             # Write a message on the blank screen ;)
             font = pygame.font.SysFont(None,60)
-            img = font.render("You lost! Loser ;P", True, "YELLOW")
+            img = font.render("You lost! Loser ;P", True, "White")
             screen.blit(img,(120,300))
 
 
@@ -689,15 +736,17 @@ if True:
         pygame.draw.rect(screen, "Black", pygame.Rect(x,y,width,height))
         #pygame.display.update()
         
-    def runGame(n, numberOfColumns, width, height, listOfColours, allPegs = [], allUsersAnswers = [], numberOfTurnsUsed = 0, board=[]):
+    def runGame(n, numberOfColumns, width, height, listOfColours, allPegs = [], allUsersAnswers = [], numberOfTurnsUsed = 0, board=[], answers=[]):
         numberOfRowsLeft = n
         # Create the buttons for the initial row
         
         if numberOfTurnsUsed == 0:
 
             buttons, oldx, oldy = makeButtons(100, 30, numberOfColumns, listOfColours)
-            board = generateRandomBoard(listOfColours, numberOfColumns)
-
+            if len(answers) == 0:
+                board = generateRandomBoard(listOfColours, numberOfColumns)
+            else:
+                board = answers
             print(f"Board = {board}")
             gameOn = True
 
@@ -734,7 +783,9 @@ if True:
     def displayGame(buttons, listOfColours, oldx, oldy, numberOfColumns, correctAnswer, numberOfRowsLeft, gameOn, board, screenWidth, screenHeight, allPegs = [], allUsersAnswers = [], numberOfRows=10):
         # Display board and all that
         # Checks if the game is closed or not ;P
+        # Draw all the coloured Boxes
 
+        showColoursForPage(len(listOfColours), listOfColours, screenWidth, screenHeight)
         
 
         for event in pygame.event.get():
@@ -798,6 +849,7 @@ if True:
                 saveGameButton = Button("Save Game", (screenWidth-170, 50), font=30, bg="Red", saveGameButton = True)
                 buttons.append(mainMenuButton)
                 buttons.append(saveGameButton)
+
                 mainMenuButton.show()
                 saveGameButton.show()
                 pygame.font.init()
@@ -807,14 +859,12 @@ if True:
                 surface = pygame.Surface(size)
                 surface.blit(textSurface, (0, 0))
                 screen.blit(textSurface, (50,10))
-                
-            #  pygame.display.update()
 
         # Displays the button
         for button in buttons:
             button.show()
             clock.tick(75)
-            #pygame.display.update()
+
 
         # Display how many turns left:
 
@@ -832,7 +882,8 @@ if True:
         buttons = []
         longestLabel = "Show Leaderboard"
         #helpPage(numberOfColumns, numberOfRows, listOfColours, screenWidth, screenHeight)
-        helpPageButton = Button("Help Page", (giveXCoord(longestLabel, screenWidth), 580), listOfColours, font=30, bg="Cyan", helpPageButton=True)
+        helpPageButton = Button("Help Page", (giveXCoord(longestLabel, screenWidth), 580), listOfColours, font=30, bg="Salmon", helpPageButton=True)
+        rulesPageButton = Button("Rules Page", (giveXCoord(longestLabel, screenWidth), 650), listOfColours, font=30, bg="navyblue", rulesPageButton=True)
         showLeaderBoardButton = Button("Show Leaderboard", (giveXCoord(longestLabel, screenWidth), 300), listOfColours, font=30, bg="NavyBlue", displayLeaderBoardButton=True)
         newGameButton = Button("New Game", (giveXCoord(longestLabel, screenWidth), 370), listOfColours, font=30, bg="Red", newGameButton=True)
     # saveGameButton = Button("Save Game", (xCoord, 440), listOfColours, font=30, bg="Red", saveGameButton=True)
@@ -840,6 +891,7 @@ if True:
         settingsPageButton = Button("Settings", (giveXCoord(longestLabel, screenWidth), 510), listOfColours, font=30, bg="Grey", settingsPageButton = True)
 
         buttons.append(helpPageButton)
+        buttons.append(rulesPageButton)
         buttons.append(settingsPageButton)
         buttons.append(showLeaderBoardButton)
         buttons.append(newGameButton)
@@ -853,7 +905,7 @@ if True:
         for button in buttons:
             button.show()
             clock.tick(75)
-    # pygame.display.update()
+
 
         running = True
         numberOfTurns = 0
@@ -869,35 +921,25 @@ if True:
                         leaderboardPage(screenWidth, screenHeight, currentNumber, listOfColours, numberOfColumns, numberOfRows)
                     
                     elif buttonPressed == "NewGame":
-                        # Hide buttons :D
-                        clearScreen(screenWidth, screenHeight)
-                        #running = False
-                        won, numberOfTurns = runGame(numberOfRows, numberOfColumns, screenWidth, screenHeight, listOfColours, allPegs, allUsersAnswers)
-                        buttons = displayGameOver(won, screenWidth, screenHeight, listOfColours, numberOfTurns, numberOfColumns)
-                        onGameOverScreen = True
-                        while onGameOverScreen:
-                            for event in pygame.event.get():
-                                if event.type == pygame.QUIT:
-                                    pygame.quit()
-                                    exit()
-                                for b in buttons:
-                                    buttonPressed = b.click(event, listOfColours)
-                                    if buttonPressed == "MainMenu":
-                                        mainMenu(numberOfColumns, numberOfRows, listOfColours, screenWidth, screenHeight)
+                        singleOrMultiPage(numberOfColumns, numberOfRows,screenWidth, screenHeight, listOfColours, allPegs, allUsersAnswers)
+
 
                     elif buttonPressed == "LoadGame":
                         loadGame(screenWidth, screenHeight)
 
                     elif buttonPressed == "SettingsPage":
                         clearScreen(screenWidth, screenHeight)
-                        widthNum, heightNum, columnNum, rowNum, listOfColours = settingsPage(screenWidth,screenHeight, numberOfColumns, numberOfRows, len(listOfColours))
+                        widthNum, heightNum, columnNum, rowNum, listOfColours = settingsPage(screenWidth,screenHeight, numberOfColumns, numberOfRows, len(listOfColours), ["Yellow", "Red", "Orange", "Blue", "Purple",  "Green", "Crimson", "Coral", "Cyan", "darkblue", "darkgreen", "darksalmon", "deeppink4", "pink"])
                         mainMenu(columnNum, rowNum, listOfColours, widthNum, heightNum)
                     
                     elif buttonPressed == "Help":
                         clearScreen(screenWidth, screenHeight)
                         helpPage(numberOfColumns, numberOfRows, listOfColours, screenWidth, screenHeight)
 
-
+                    elif buttonPressed == "Rules":
+                        clearScreen(screenWidth, screenHeight)
+                        rulesPage(numberOfColumns, numberOfRows, listOfColours, screenWidth, screenHeight)
+        won = False
         return won, screenWidth,screenHeight, numberOfColumns, numberOfRows, listOfColours, numberOfTurns
 
     def changeListOfColours(newLength):
@@ -910,11 +952,32 @@ if True:
         won, screenWidth,screenHeight, numberOfColumns, numberOfRows, listOfColours, numberOfTurns = mainMenu(numberOfColumns, numberOfRows, listOfColours=colours, screenWidth=width, screenHeight=height, allPegs=allPegs, allUsersAnswers=allUsersAnswers)
 
         buttons = displayGameOver(won, screenWidth, screenHeight, listOfColours, numberOfTurns, numberOfColumns)
-        pygame.display.update()     
+ 
 
         return buttons, screenWidth,screenHeight, numberOfColumns, numberOfRows, listOfColours
 
-    def settingsPage(screenWidth,screenHeight, numberOfColumns, numberOfRows, numberOfColours):
+    def showColoursForPage(numOfColours, listOfColours, screenWidth, screenHeight):
+        clearScreen(210, screenHeight-200, x=screenWidth-210, y=200)
+        writeText("Available Colours:",screenWidth-270,150, fontSize=35, fontName="Arial")
+        for colourIndex in range(numOfColours):
+            if colourIndex < 6:
+                x = screenWidth-90
+                y = 200+(colourIndex*55)
+            elif colourIndex < 12:
+                x = screenWidth-150
+                y = 200+((colourIndex-6)*55)
+            else:
+                x = screenWidth-210
+                y = 200+((colourIndex-12)*55)                
+            currentColour = listOfColours[colourIndex]
+            # Affects where the button is visually drawn
+            surface = pygame.Surface((50,50))
+            surface.fill(currentColour)
+ 
+            screen.blit(surface, (x, y)) 
+
+
+    def settingsPage(screenWidth,screenHeight, numberOfColumns, numberOfRows, numberOfColours, listOfColours):
 
         if True:
             columnNum = numberOfColumns
@@ -981,6 +1044,8 @@ if True:
         for button in buttons:
             button.show()
             clock.tick(75)
+        
+        showColoursForPage(numOfColours, listOfColours, screenWidth, screenHeight)
         pygame.display.update()
 
         font = pygame.font.SysFont("Arial", fontSize)
@@ -1034,6 +1099,7 @@ if True:
                             text = font.render(t, 1, pygame.Color("White"))
                             size = text.get_size()
                             clearScreen(size[0], size[1], x2, 230)
+                            showColoursForPage(numOfColours, listOfColours, screenWidth, screenHeight)
                             newX = x2
                             newY = 240
                         elif b == mb5:
@@ -1060,7 +1126,7 @@ if True:
                             newY = 120
                         elif b == pb2:
                             t = str("Num")
-                            if columnNum < 20:
+                            if columnNum < 11:
                                 columnNum += 1
                             n=columnNum
                             text = font.render(t, 1, pygame.Color("White"))
@@ -1086,6 +1152,7 @@ if True:
                             text = font.render(t, 1, pygame.Color("White"))
                             size = text.get_size()
                             clearScreen(size[0], size[1], x2, 230)
+                            showColoursForPage(numOfColours, listOfColours, screenWidth, screenHeight)
                             newX = x2
                             newY = 240
                         elif b == pb5:
@@ -1099,6 +1166,7 @@ if True:
                             newX = x3
                             newY = 120
                         writeText (f"{n}", newX,newY, fontSize)
+
                     pygame.display.update()
         listOfColours = changeListOfColours(numOfColours)
         return widthNum, heightNum, columnNum, rowNum, listOfColours
@@ -1225,7 +1293,6 @@ if True:
                 surface = pygame.Surface((50,50))
                 surface.fill(bg)
                 screen.blit(surface, (x,oldy))
-                pygame.display.update()
 
             pegColours = listOfDictionariesOfPegs[i]
             getPegsPositioned(pegColours, oldx, oldy)
@@ -1246,45 +1313,10 @@ if True:
         buttons = displayGameOver(won, screenWidth, height, listOfColours, numberOfTurnsUsed, numberOfColumns)
 
 
-        """
-
-        mainMenuButton = Button("Main Menu", (screenWidth-320, 50), font=30, bg="Red", mainMenu = True)
-        saveGameButton = Button("Main Menu", (screenWidth-320, 100), font=30, bg="Red", saveGameButton = True)
-
-        mainMenuButton.show()
-        saveGameButton.show()
-
-
-        gameOn = True
-        numberOfRowsLeft = numberOfRowsRemaining
-        while gameOn:
-            # Start the game
-            buttons, oldx, oldy, numberOfRowsLeft, gameOn =  displayGame(buttons, listOfColours, oldx, oldy, numberOfColumns, board, numberOfRowsLeft, gameOn, board, width, height, colouredPegs, usersChoices)
-
-            won = False
-            # If the game is over
-            if gameOn == False:
-                won = True
-
-
-            # If the game isn't over :(
-            elif numberOfRowsLeft == 0:
-                gameOn = False
-
-        updateLeaderboards(len(listOfColours), numberOfColumns, numberOfRows -numberOfRowsRemaining)
-
-        return won, numberOfRows -numberOfRowsRemaining
-        """
-
-    def writeText(text, x, y, fontSize=30, fontColour="White"):
-        font = pygame.font.SysFont(None,fontSize)
+    def writeText(text, x, y, fontSize=30, fontColour="White", fontName = None):
+        font = pygame.font.SysFont(fontName,fontSize)
         img = font.render(text, True, fontColour)
         screen.blit(img,(x,y))
-        pygame.display.update()
-
-    def singleOrMultiPage():
-        pass
-
 
     def helpPage(numberOfColumns, numberOfRows, listOfColours, screenWidth, screenHeight):
         writeText("Help Page:",450,30, fontSize=50)
@@ -1325,10 +1357,165 @@ if True:
                     if buttonPressed == "MainMenu":
                         mainMenu(numberOfColumns, numberOfRows, listOfColours, screenWidth, screenHeight)
 
+    def rulesPage(numberOfColumns, numberOfRows, listOfColours, screenWidth, screenHeight):
+        writeText("Rules Page:",450,30, fontSize=50)
+
+        writeText("Scoring:",100,90, fontSize=40)
+        writeText("Score = (Number of colours chosen X number of columns) ^ (1 ÷ number of turns taken)  X 1,000",50,130, fontSize=30, fontColour="Grey")
+
+        writeText("Coloured Pegs",100,190, fontSize=40)
+        writeText("After each row that you submit, a coloured peg for each coloured tile will appear. If the coloured peg is green, it",50,230, fontSize=30, fontColour="Grey")
+        writeText("means that the tile is in the correct place and the correct colour. If the tile is orange, it means you got the right",50,270, fontSize=30, fontColour="Grey")
+        writeText("colour just in the wrong position and if it's red, it means it's completely wrong.",50,310, fontSize=30, fontColour="Grey")
+
+        writeText("Goal:",100,410, fontSize=40)
+        writeText("You have a limited number of turns to guess the combination of colours in the correct order that the computer",50,450, fontSize=30, fontColour="Grey")
+        writeText("generated. the faster you do this, the higher your score.",50,490, fontSize=30, fontColour="Grey")
+
+        mainMenuButton = Button("Main Menu", (screenWidth-320, 50), font=30, bg="Red", mainMenu = True)
+        mainMenuButton.show()
+
+        buttons = [mainMenuButton]
+        while True:   
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                for b in buttons:
+                    buttonPressed = b.click(event, listOfColours)
+                    if buttonPressed == "MainMenu":
+                        mainMenu(numberOfColumns, numberOfRows, listOfColours, screenWidth, screenHeight)
 
 
+    def singleOrMultiPage(numberOfColumns, numberOfRows,screenWidth, screenHeight, listOfColours, allPegs=[], allUsersAnswers=[]):
+        clearScreen(screenWidth, screenHeight)
+        # 3 Buttons
+        # SinglePlayer, Multiplayer, Main Menu
 
-    #, "Blue", "Red", "Purple", "Orange", "Green", "Crimson", "Coral", "Cyan", "darkblue", "darkgreen", "darksalmon", "deeppink4", "pink"
+        writeText("Single Player or", 350, 150, fontSize=90, fontColour="White")
+        writeText("Multi Player?", 380, 250, fontSize=90, fontColour="White")
+        singePlayerButton = Button("Single Player", (400, 450), font=70, bg="Red", singlePlayerButton = True)
+        singePlayerButton.show()
+        multiPlayerButton = Button("Multi Player", (420, 550), font=70, bg="Red", multiPlayerButton = True)
+        multiPlayerButton.show()
+        mainMenuButton = Button("Main Menu", (screenWidth-320, 50), font=30, bg="Red", mainMenu = True)
+        mainMenuButton.show()
+        pygame.display.update()
+
+        buttons = [mainMenuButton, singePlayerButton, multiPlayerButton]
+        while True:   
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                for b in buttons:
+                    buttonPressed = b.click(event, listOfColours)
+                    if buttonPressed == "MainMenu":
+                        mainMenu(numberOfColumns, numberOfRows, listOfColours, screenWidth, screenHeight)
+                    elif buttonPressed == "SinglePlayer":
+                        clearScreen(screenWidth, screenHeight)
+                        #running = False
+                        won, numberOfTurns = runGame(numberOfRows, numberOfColumns, screenWidth, screenHeight, listOfColours, allPegs, allUsersAnswers)
+                        buttons = displayGameOver(won, screenWidth, screenHeight, listOfColours, numberOfTurns, numberOfColumns)
+                        onGameOverScreen = True
+                        while onGameOverScreen:
+                            for event in pygame.event.get():
+                                if event.type == pygame.QUIT:
+                                    pygame.quit()
+                                    exit()
+                                for b in buttons:
+                                    buttonPressed = b.click(event, listOfColours)
+                                    if buttonPressed == "MainMenu":
+                                        mainMenu(numberOfColumns, numberOfRows, listOfColours, screenWidth, screenHeight)
+
+                    elif buttonPressed == "MultiPlayer":
+                        localOrNetworked(numberOfColumns, numberOfRows, screenWidth, screenHeight, listOfColours, allPegs, allUsersAnswers)
+
+
+    def localOrNetworked(numberOfColumns, numberOfRows, screenWidth, screenHeight, listOfColours, allPegs=[], allUsersAnswers=[]):
+        clearScreen(screenWidth, screenHeight)
+        onlineButton = Button("Online", (400, 450), font=70, bg="Red", onlineButton=True)
+        onlineButton.show()
+        writeText("Online Multiplayer or ",300,200, fontSize=90)        
+        writeText("Local Multiplayer?",350,280, fontSize=90)
+        writeText("Online: Not Currently In Game",600,450)
+        writeText("Local: One player on your computer chooses the ",600,550)
+        writeText("combination of colours for you to geuss.",600,580)
+        localButton = Button("Local", (420, 550), font=70, bg="Red", localButton= True)
+        localButton.show()
+        mainMenuButton = Button("Main Menu", (screenWidth-320, 50), font=30, bg="Red", mainMenu = True)
+        mainMenuButton.show()
+        pygame.display.update()
+
+
+        buttons = [mainMenuButton, onlineButton, localButton]
+        while True:   
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                for b in buttons:
+                    buttonPressed = b.click(event, listOfColours)
+                    if buttonPressed == "MainMenu":
+                        print("Main")
+                        mainMenu(numberOfColumns, numberOfRows, listOfColours, screenWidth, screenHeight)
+
+                    elif buttonPressed == "Local":
+                        clearScreen(screenWidth, screenHeight)
+                        answers = getUsersChoiceOfColours(numberOfColumns, listOfColours, numberOfRows,screenWidth,screenHeight)
+                        clearScreen(screenWidth, screenHeight)
+                        #running = False
+                        won, numberOfTurns = runGame(numberOfRows, numberOfColumns, screenWidth, screenHeight, listOfColours, allPegs, allUsersAnswers, answers=answers)
+                        buttons = displayGameOver(won, screenWidth, screenHeight, listOfColours, numberOfTurns, numberOfColumns)
+                        onGameOverScreen = True
+                        while onGameOverScreen:
+                            for event in pygame.event.get():
+                                if event.type == pygame.QUIT:
+                                    pygame.quit()
+                                    exit()
+                                for b in buttons:
+                                    buttonPressed = b.click(event, listOfColours)
+                                    if buttonPressed == "MainMenu":
+                                        mainMenu(numberOfColumns, numberOfRows, listOfColours, screenWidth, screenHeight)
+
+                    elif buttonPressed == "Online":
+                        print("Not working :(")
+
+    def getUsersChoiceOfColours(numberOfColumns, listOfColours, numberOfRows,screenWidth,screenHeight):
+        mainMenuButton = Button("Main Menu", (880, 50), font=30, bg="Red", mainMenu=True)
+        buttons = []
+        x,y = 150,250
+        xChange = 60
+        
+        for i in range(numberOfColumns):
+            button = Button("Click here", (x, y), listOfColours, font=30, bg=listOfColours[0], feedback="You clicked me")
+            x += xChange
+            buttons.append(button)
+
+        submitButton = Button("Submit",(x+10, y),listOfColours,font=30,bg="Blue",feedback="Submitted",submitButton=True)
+        buttons.append(submitButton)
+        buttons.append(mainMenuButton)
+
+        for b in buttons:
+            b.show()
+        showColoursForPage(len(listOfColours), listOfColours, screenWidth, screenHeight)
+        writeText("User 1: Enter Your Choice", 80,90,fontSize=60,fontName="Arial")
+        pygame.display.update()
+        coloursNotFound = True
+        while coloursNotFound:   
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                for b in buttons:
+                    buttonPressed = b.click(event, listOfColours)
+                    if buttonPressed == "MainMenu":
+                        mainMenu(numberOfColumns, numberOfRows, listOfColours,screenWidth,screenHeight)
+                    elif buttonPressed == "Submit":
+                        answersForBoard = getAnswers(buttons)
+                        coloursNotFound = False
+        return answersForBoard
+  
     colourListLength = 4
     colours = changeListOfColours(colourListLength)
     numberOfColumns, numberOfRows = 4, 10
@@ -1343,3 +1530,4 @@ if True:
                 if buttonPressed == "MainMenu":
 
                     buttons, screenWidth,screenHeight, numberOfColumns, numberOfRows, listOfColours = openGame(screenWidth, screenHeight, numberOfColumns, numberOfRows, listOfColours, allPegs = ["Red"], allUsersAnswers = ["Blue"])
+                
